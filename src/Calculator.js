@@ -18,22 +18,26 @@ function Calculator({ workouts, allowSound }) {
 
   function handleInc() {
     setDuration((duration) => Math.floor(duration) + 1);
-    playSound();
   }
   function handleDec() {
     setDuration((duration) => (duration > 1 ? Math.ceil(duration) - 1 : 0));
-    playSound();
   }
 
   // const duration = (number * sets * speed) / 60 + (sets - 1) * durationBreak;
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
+  useEffect(
+    function () {
+      const playSound = function () {
+        if (!allowSound) return;
+        const sound = new Audio(clickSound);
+        sound.play();
+      };
+      playSound();
+    },
+    [allowSound, duration]
+  );
 
   return (
     <>
